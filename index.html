@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Agriculture Monitoring | V4</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         REAL FARM VIDEO BACKGROUND
+         BACKGROUND PRESERVED — NO CHANGE
+    ====================================================== -->
+
+    <div class="dashboard-video-bg">
+
+        <video
+            id="farmVideo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            poster="assets/farm-bg.jpg"
+        >
+            <source
+                src="assets/farm-background.mp4"
+                type="video/mp4"
+            >
+
+            Your browser does not support HTML5 video.
+        </video>
+
+        <div class="dashboard-video-overlay"></div>
+
+        <button
+            id="soundBtn"
+            class="sound-btn"
+            type="button"
+            onclick="enableFarmSound()"
+        >
+            🔇 Enable Farm Sound
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN APPLICATION
+    ====================================================== -->
+
+    <div class="app-container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="topbar" id="topbar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🌱
+                </div>
+
+                <div class="brand-text">
+
+                    <h2>
+                        Smart Agriculture
+                    </h2>
+
+                    <span>
+                        Monitoring System V4
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <nav class="main-nav">
+
+                <a
+                    href="home.html"
+                    class="home-btn"
+                >
+                    🏠 <span>Home</span>
+                </a>
+
+                <a
+                    href="index.html"
+                    class="dashboard-btn active"
+                >
+                    📊 <span>Dashboard</span>
+                </a>
+
+                <span
+                    id="espStatus"
+                    class="online-badge"
+                >
+                    <span class="status-pulse"></span>
+                    🟢 ESP32 Online
+                </span>
+
+            </nav>
+
+        </header>
+
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="dashboard-hero">
+
+            <div class="hero-content">
+
+                <span class="hero-tag">
+                    🌿 SMART FARMING
+                    <span>•</span>
+                    V4
+                </span>
+
+                <h1>
+                    Grow Smarter.
+                    <br>
+                    <span>Farm Better.</span>
+                </h1>
+
+                <p>
+                    Real-time agriculture monitoring
+                    with intelligent irrigation control.
+                </p>
+
+                <div class="hero-meta">
+
+                    <div class="hero-meta-item">
+                        <span class="hero-meta-dot"></span>
+                        Live Monitoring
+                    </div>
+
+                    <div class="hero-meta-item">
+                        🤖 AI Assisted
+                    </div>
+
+                    <div class="hero-meta-item">
+                        💧 Smart Irrigation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-status">
+
+                <div class="status-dot"></div>
+
+                <div>
+
+                    <strong>
+                        Smart Farm Online
+                    </strong>
+
+                    <span>
+                        IoT monitoring active
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SENSOR SECTION
+        ================================================== -->
+
+        <section class="sensor-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        LIVE SENSORS
+                    </span>
+
+                    <h2>
+                        Farm Environment
+                    </h2>
+
+                </div>
+
+                <div class="last-update">
+                    <span class="live-indicator"></span>
+                    Live data
+                </div>
+
+            </div>
+
+
+            <div class="sensor-grid">
+
+
+                <!-- TEMPERATURE -->
+
+                <div class="sensor-card temperature-card">
+
+                    <div class="sensor-card-top">
+
+                        <div class="sensor-icon">
+                            🌡️
+                        </div>
+
+                        <span class="sensor-live">
+                            LIVE
+                        </span>
+
+                    </div>
+
+                    <span class="sensor-label">
+                        Temperature
+                    </span>
+
+                    <div class="sensor-value">
+
+                        <strong id="temperature">
+                            --
+                        </strong>
+
+                        <span>
+                            °C
+                        </span>
+
+                    </div>
+
+                    <p class="sensor-description">
+                        Current farm temperature
+                    </p>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                    <div class="sensor-footer">
+                        <span>Environmental Sensor</span>
+                        <span>●</span>
+                    </div>
+
+                </div>
+
+
+
+                <!-- HUMIDITY -->
+
+                <div class="sensor-card humidity-card">
+
+                    <div class="sensor-card-top">
+
+                        <div class="sensor-icon">
+                            💧
+                        </div>
+
+                        <span class="sensor-live">
+                            LIVE
+                        </span>
+
+                    </div>
+
+                    <span class="sensor-label">
+                        Humidity
+                    </span>
+
+                    <div class="sensor-value">
+
+                        <strong id="humidity">
+                            --
+                        </strong>
+
+                        <span>
+                            %
+                        </span>
+
+                    </div>
+
+                    <p class="sensor-description">
+                        Air humidity level
+                    </p>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                    <div class="sensor-footer">
+                        <span>Atmospheric Sensor</span>
+                        <span>●</span>
+                    </div>
+
+                </div>
+
+
+
+                <!-- SOIL MOISTURE -->
+
+                <div class="sensor-card soil-card">
+
+                    <div class="sensor-card-top">
+
+                        <div class="sensor-icon">
+                            🌱
+                        </div>
+
+                        <span class="sensor-live">
+                            LIVE
+                        </span>
+
+                    </div>
+
+                    <span class="sensor-label">
+                        Soil Moisture
+                    </span>
+
+                    <div class="sensor-value">
+
+                        <strong id="soilMoisture">
+                            --
+                        </strong>
+
+                        <span>
+                            %
+                        </span>
+
+                    </div>
+
+                    <p class="sensor-description">
+                        Soil water availability
+                    </p>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                    <div class="sensor-footer">
+                        <span>Soil Sensor</span>
+                        <span>●</span>
+                    </div>
+
+                </div>
+
+
+
+                <!-- ESP32 -->
+
+                <div class="sensor-card esp-card">
+
+                    <div class="sensor-card-top">
+
+                        <div class="sensor-icon">
+                            📡
+                        </div>
+
+                        <span class="sensor-live">
+                            ONLINE
+                        </span>
+
+                    </div>
+
+                    <span class="sensor-label">
+                        ESP32 Device
+                    </span>
+
+                    <div class="sensor-value">
+
+                        <strong>
+                            ON
+                        </strong>
+
+                    </div>
+
+                    <p class="sensor-description">
+                        IoT controller connection
+                    </p>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                    <div class="sensor-footer">
+                        <span>IoT Controller</span>
+                        <span>●</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PUMP CONTROL
+        ================================================== -->
+
+        <section class="pump-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        IRRIGATION SYSTEM
+                    </span>
+
+                    <h2>
+                        Smart Water Pump
+                    </h2>
+
+                </div>
+
+                <div class="section-live-badge">
+                    💧 SMART CONTROL
+                </div>
+
+            </div>
+
+
+            <div class="pump-panel">
+
+
+                <!-- INFORMATION -->
+
+                <div class="pump-info">
+
+                    <div class="pump-heading">
+
+                        <div class="pump-icon">
+                            💦
+                        </div>
+
+                        <div>
+
+                            <span class="section-label">
+                                SMART IRRIGATION
+                            </span>
+
+                            <h2>
+                                Automatic Water Management
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                    <p id="pumpDescription">
+                        Automatic irrigation control
+                        based on soil moisture.
+                    </p>
+
+
+                    <!-- MODE -->
+
+                    <div class="mode-section">
+
+                        <span>
+                            Control Mode
+                        </span>
+
+                        <div class="mode-buttons">
+
+                            <button
+                                id="autoBtn"
+                                class="mode-btn"
+                                onclick="setMode('AUTO')"
+                            >
+                                🤖 AUTO
+                            </button>
+
+                            <button
+                                id="manualBtn"
+                                class="mode-btn"
+                                onclick="setMode('MANUAL')"
+                            >
+                                🖐️ MANUAL
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MANUAL -->
+
+                    <div class="manual-controls">
+
+                        <button
+                            class="pump-on"
+                            onclick="setPump(true)"
+                        >
+                            💧 Pump ON
+                        </button>
+
+                        <button
+                            class="pump-off"
+                            onclick="setPump(false)"
+                        >
+                            ⛔ Pump OFF
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PUMP STATUS -->
+
+                <div class="pump-status">
+
+                    <div
+                        id="pumpCircle"
+                        class="pump-circle"
+                    >
+                        💧
+                    </div>
+
+                    <div class="pump-status-text">
+
+                        <span>
+                            Pump Status
+                        </span>
+
+                        <strong id="pumpStatus">
+                            OFF
+                        </strong>
+
+                    </div>
+
+                    <div class="pump-status-detail">
+
+                        <span>
+                            Current Mode
+                        </span>
+
+                        <strong id="pumpMode">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SYSTEM OVERVIEW
+        ================================================== -->
+
+        <section class="overview-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        SYSTEM OVERVIEW
+                    </span>
+
+                    <h2>
+                        Farm Health
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="overview-grid">
+
+
+                <div class="overview-card">
+
+                    <div class="overview-icon">
+                        💧
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Water Status
+                        </h4>
+
+                        <strong id="waterStatus">
+                            Checking...
+                        </strong>
+
+                        <p>
+                            Irrigation condition
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="overview-card">
+
+                    <div class="overview-icon">
+                        🌱
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Plant Health
+                        </h4>
+
+                        <strong id="plantHealth">
+                            Checking...
+                        </strong>
+
+                        <p>
+                            Crop condition
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="overview-card">
+
+                    <div class="overview-icon">
+                        📡
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            ESP32 Status
+                        </h4>
+
+                        <strong id="espOverview">
+                            Checking...
+                        </strong>
+
+                        <p>
+                            Device connection
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="overview-card">
+
+                    <div class="overview-icon">
+                        🕒
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Last Update
+                        </h4>
+
+                        <strong id="lastUpdate">
+                            --
+                        </strong>
+
+                        <p>
+                            Latest sensor reading
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             AI SECTION
+        ================================================== -->
+
+        <section class="ai-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        ARTIFICIAL INTELLIGENCE
+                    </span>
+
+                    <h2>
+                        Smart Farm Intelligence
+                    </h2>
+
+                </div>
+
+                <span class="ai-status">
+                    <span class="ai-pulse"></span>
+                    AI ACTIVE
+                </span>
+
+            </div>
+
+
+            <div class="ai-panel">
+
+                <div class="ai-content">
+
+
+                    <div class="ai-brain">
+
+                        <div class="brain-ring">
+
+                            <div class="brain-core">
+                                🧠
+                            </div>
+
+                        </div>
+
+                        <span>
+                            AI ANALYSIS
+                        </span>
+
+                        <small>
+                            Real-time farm intelligence
+                        </small>
+
+                    </div>
+
+
+                    <div class="ai-result">
+
+
+                        <div class="ai-status-box">
+
+                            <span>
+                                FARM STATUS
+                            </span>
+
+                            <strong>
+                                Healthy
+                            </strong>
+
+                        </div>
+
+
+                        <div class="recommendation">
+
+                            <div class="recommendation-icon">
+                                🌱
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Recommendation
+                                </strong>
+
+                                <p>
+                                    Maintain current soil
+                                    moisture and monitor
+                                    environmental conditions.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="ai-action">
+
+                            <span>
+                                NEXT ACTION
+                            </span>
+
+                            <strong>
+                                Monitor
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LIVE ANALYTICS
+        ================================================== -->
+
+        <section class="charts-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        LIVE ANALYTICS
+                    </span>
+
+                    <h2>
+                        Environmental Trends
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="charts-grid">
+
+
+                <!-- TEMPERATURE -->
+
+                <div class="chart-card">
+
+                    <div class="chart-header">
+
+                        <div>
+
+                            <span>
+                                SENSOR DATA
+                            </span>
+
+                            <h3>
+                                🌡️ Temperature
+                            </h3>
+
+                        </div>
+
+                        <div class="chart-icon">
+                            🌡️
+                        </div>
+
+                    </div>
+
+                    <div class="chart-wrapper">
+
+                        <canvas
+                            id="temperatureChart"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HUMIDITY -->
+
+                <div class="chart-card">
+
+                    <div class="chart-header">
+
+                        <div>
+
+                            <span>
+                                SENSOR DATA
+                            </span>
+
+                            <h3>
+                                💧 Humidity
+                            </h3>
+
+                        </div>
+
+                        <div class="chart-icon">
+                            💧
+                        </div>
+
+                    </div>
+
+                    <div class="chart-wrapper">
+
+                        <canvas
+                            id="humidityChart"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SOIL -->
+
+                <div class="chart-card">
+
+                    <div class="chart-header">
+
+                        <div>
+
+                            <span>
+                                SENSOR DATA
+                            </span>
+
+                            <h3>
+                                🌱 Soil Moisture
+                            </h3>
+
+                        </div>
+
+                        <div class="chart-icon">
+                            🌱
+                        </div>
+
+                    </div>
+
+                    <div class="chart-wrapper">
+
+                        <canvas
+                            id="soilChart"
+                        ></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SMART ALERT
+        ================================================== -->
+
+        <section class="alert-section">
+
+            <div class="alert-panel">
+
+                <div
+                    id="alertIcon"
+                    class="alert-icon"
+                >
+                    🌿
+                </div>
+
+                <div class="alert-content">
+
+                    <span>
+                        SMART ALERT
+                    </span>
+
+                    <h3 id="alertTitle">
+                        System Normal
+                    </h3>
+
+                    <p id="alertMessage">
+                        Monitoring your farm environment.
+                    </p>
+
+                </div>
+
+                <div class="alert-status-dot"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ARCHITECTURE
+        ================================================== -->
+
+        <section class="architecture-section">
+
+            <div class="section-title center">
+
+                <span>
+                    SYSTEM ARCHITECTURE
+                </span>
+
+                <h2>
+                    Smart Agriculture Flow
+                </h2>
+
+                <p>
+                    Sensors collect farm data, ESP32 processes
+                    the information, and the dashboard provides
+                    real-time monitoring and irrigation control.
+                </p>
+
+            </div>
+
+
+            <div class="architecture-flow">
+
+
+                <div class="architecture-node">
+
+                    <div>🌡️</div>
+
+                    <strong>
+                        Sensors
+                    </strong>
+
+                    <span>
+                        Temperature
+                    </span>
+
+                </div>
+
+
+                <div class="architecture-arrow">
+                    →
+                </div>
+
+
+                <div class="architecture-node">
+
+                    <div>📡</div>
+
+                    <strong>
+                        ESP32
+                    </strong>
+
+                    <span>
+                        Controller
+                    </span>
+
+                </div>
+
+
+                <div class="architecture-arrow">
+                    →
+                </div>
+
+
+                <div class="architecture-node">
+
+                    <div>☁️</div>
+
+                    <strong>
+                        Cloud
+                    </strong>
+
+                    <span>
+                        Data Storage
+                    </span>
+
+                </div>
+
+
+                <div class="architecture-arrow">
+                    →
+                </div>
+
+
+                <div class="architecture-node">
+
+                    <div>📊</div>
+
+                    <strong>
+                        Dashboard
+                    </strong>
+
+                    <span>
+                        Monitoring
+                    </span>
+
+                </div>
+
+
+                <div class="architecture-arrow">
+                    →
+                </div>
+
+
+                <div class="architecture-node">
+
+                    <div>💧</div>
+
+                    <strong>
+                        Irrigation
+                    </strong>
+
+                    <span>
+                        Smart Pump
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+            <div class="footer-brand">
+
+                <div class="brand-icon">
+                    🌱
+                </div>
+
+                <div>
+
+                    <strong>
+                        Smart Agriculture
+                    </strong>
+
+                    <span>
+                        Monitoring System
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-center">
+
+                <span>IoT</span>
+                <span>•</span>
+                <span>AI</span>
+                <span>•</span>
+                <span>Cloud</span>
+                <span>•</span>
+                <span>Smart Irrigation</span>
+
+            </div>
+
+
+            <div class="footer-copy">
+                V4 Dashboard
+            </div>
+
+        </footer>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
